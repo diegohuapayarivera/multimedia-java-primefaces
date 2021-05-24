@@ -30,7 +30,8 @@
                          player="mp4"
                          controls="true"
                          width="420"
-                         height="250">
+                         height="250"
+                         >
 
                 </p:video>
             </p:panelGrid>
@@ -81,6 +82,55 @@
                 </p:column>
 
             </p:dataTable>
+        </h:form>
+        <h:form id="frm10"> 
+            <div class="p-grid">
+                <p:repeat value="${imgC.listaPd}" var="pd" >
+                    <div class="p-col">
+                        <p:card style="width: 500px">
+                            <f:facet name="header">
+                                <img alt="user header" src="image/${pd.imagen}.jpg" style="height: 300px;width: 450px"/>
+                            </f:facet>
+                            <f:facet name="title">
+                                ${pd.nombre}
+                            </f:facet>
+                            <f:facet name="subtitle">
+                                ${pd.categoria.nombre}
+                            </f:facet>
+                            <p>${pd.descripcion}</p>
+                            <f:facet name="footer">
+                                <p:commandButton value="Actualizar" actionListener="#{imgC.enviarDatos(pd)}" 
+                                                 oncomplete="PF('dlgProducto').show();" />
+                                
+                            </f:facet>
+                        </p:card>
+                    </div>
+                    <br></br>
+                </p:repeat>
+            </div>
+        </h:form>
+
+        <h:form id="frm20">
+            <p:dialog widgetVar="dlgProducto" header="Actualizar producto" resizable="flase">
+                <p:panelGrid columns="2">
+
+
+                    <p:outputLabel value="Nombre"/>
+                    <p:inputText value="${imgC.producto.nombre}"/>
+                    <p:outputLabel value="Descripcion"/>
+                    <p:selectOneMenu value="${imgC.producto.idcat}">
+                        <f:selectItem itemLabel="Aceites" itemValue="1"/>
+                        <f:selectItem itemLabel="Lacteos" itemValue="2"/>
+                        <f:selectItem itemLabel="Bebida" itemValue="3"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Descripcion"/>
+                    <p:inputText value="${imgC.producto.descripcion}"/>
+
+
+                </p:panelGrid>
+                <p:commandButton value="Actualizar" actionListener="${imgC.actualizarProducto()}" update="frm2 :frm1"/>
+
+            </p:dialog>
         </h:form>
     </h:body>
 </html>

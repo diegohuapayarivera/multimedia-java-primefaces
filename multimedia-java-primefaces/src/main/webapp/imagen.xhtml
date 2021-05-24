@@ -27,24 +27,57 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
                 quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
         </p:card>
-        <div class="p-grid">
-            <p:repeat value="${imgC.listaPd}" var="pd" >
-                <div class="p-col-4">
-                    <p:card style="width: 500px">
-                        <f:facet name="header">
-                            <img alt="user header" src="image/${pd.imagen}.jpg"/>
-                        </f:facet>
-                        <f:facet name="title">
-                            ${pd.nombre}
-                        </f:facet>
-                        <f:facet name="subtitle">
-                            ${pd.categoria.nombre}
-                        </f:facet>
-                        <p>${pd.descripcion}</p>
-                    </p:card>
-                </div>
-            </p:repeat>
-        </div>
+        <br></br>
+        <h:form id="frm1"> 
+            <div class="p-grid">
+                <p:repeat value="${imgC.listaPd}" var="pd" >
+                    <div class="p-col">
+                        <p:card style="width: 500px">
+                            <f:facet name="header">
+                                <img alt="user header" src="image/${pd.imagen}.jpg" style="height: 300px;width: 450px"/>
+                            </f:facet>
+                            <f:facet name="title">
+                                ${pd.nombre}
+                            </f:facet>
+                            <f:facet name="subtitle">
+                                ${pd.categoria.nombre}
+                            </f:facet>
+                            <p>${pd.descripcion}</p>
+                            <f:facet name="footer">
+                                <p:commandButton value="Actualizar" actionListener="#{imgC.enviarDatos(pd)}" 
+                                                 oncomplete="PF('dlgProducto').show();" />
+                                <p:commandButton value="Eliminar" actionListener="${imgC.eliminarProducto(pd)}"
+                                                 update="frm1"/>
+                            </f:facet>
+                        </p:card>
+                    </div>
+                    <br></br>
+                </p:repeat>
+            </div>
+        </h:form>
+
+        <h:form id="frm2">
+            <p:dialog widgetVar="dlgProducto" header="Actualizar producto" resizable="flase">
+                <p:panelGrid columns="2">
+
+
+                    <p:outputLabel value="Nombre"/>
+                    <p:inputText value="${imgC.producto.nombre}"/>
+                    <p:outputLabel value="Descripcion"/>
+                    <p:selectOneMenu value="${imgC.producto.idcat}">
+                        <f:selectItem itemLabel="Aceites" itemValue="1"/>
+                        <f:selectItem itemLabel="Lacteos" itemValue="2"/>
+                        <f:selectItem itemLabel="Bebida" itemValue="3"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Descripcion"/>
+                    <p:inputText value="${imgC.producto.descripcion}"/>
+
+
+                </p:panelGrid>
+                <p:commandButton value="Actualizar" actionListener="${imgC.actualizarProducto()}" update="frm2 :frm1"/>
+
+            </p:dialog>
+        </h:form>
     </h:body>
 </html>
 

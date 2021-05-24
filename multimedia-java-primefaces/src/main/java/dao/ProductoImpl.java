@@ -51,4 +51,33 @@ public class ProductoImpl extends Conexion {
         }
         return lista;
     }
+
+    public void actualizar(Producto modelo) {
+        String sql = "update producto set \n"
+                + "nombre = ?, descripcion = ?,\n"
+                + "idcat = ? where idpro = ?";
+        try {
+            PreparedStatement ps = this.conectar().prepareStatement(sql);
+            ps.setString(1, modelo.getNombre());
+            ps.setString(2, modelo.getDescripcion());
+            ps.setInt(3, modelo.getIdcat());
+            ps.setInt(4, modelo.getIdpro());
+            ps.execute();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println("Error al actualizar productoImpl: " + e.getMessage());
+        }
+    }
+
+    public void eliminar(Producto modelo) {
+        String sql = "delete from producto where idpro = ?";
+        try {
+            PreparedStatement ps = this.conectar().prepareStatement(sql);
+            ps.setInt(1, modelo.getIdpro());
+            ps.execute();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println("Error al eliminar productoImpl: " + e.getMessage());
+        }
+    }
 }

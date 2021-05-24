@@ -6,10 +6,10 @@
 package controller;
 
 import dao.ModeloImpl;
-import dao.PersonaImpl; 
+import dao.PersonaImpl;
 import dao.ProductoImpl;
 import java.io.Serializable;
-import java.util.ArrayList;  
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -28,7 +28,7 @@ import modelo.Producto;
 @SessionScoped
 public class ImgC implements Serializable {
 
-    private String video ;
+    private String video;
     private int numero;
     private ModeloImpl modeloImpl;
     private List<Modelo> listaM;
@@ -37,8 +37,10 @@ public class ImgC implements Serializable {
     private List<Persona> listaP;
     private List<Producto> listaPd;
     private ProductoImpl productoD;
+    private Producto producto;
 
     public ImgC() {
+        producto = new Producto();
         listaPd = new ArrayList<>();
         productoD = new ProductoImpl();
         listaP = new ArrayList<>();
@@ -72,7 +74,7 @@ public class ImgC implements Serializable {
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Se guardo con exito"));
 //            limpiar();
         } catch (Exception e) {
-            System.out.println("Persona: "+ persona.toString());
+            System.out.println("Persona: " + persona.toString());
             System.out.println("Error al registrarPersonaC: " + e.getMessage());
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Ocurrio un error, vuelva a intentar"));
@@ -92,6 +94,34 @@ public class ImgC implements Serializable {
             System.out.println("video: " + video);
         } catch (Exception e) {
             System.out.println("Error cambiar video: " + e.getMessage());
+        }
+    }
+
+    public void enviarDatos(Producto modelo) {
+        try {
+            producto = modelo;
+        } catch (Exception e) {
+            System.out.println("Error al enviar datos: " + e.getMessage());
+        }
+    }
+
+    public void actualizarProducto() {
+        try {
+            productoD.actualizar(producto); 
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Se actualizo con exito"));
+        } catch (Exception e) {
+            System.out.println("Error al actualizarProductoC : " + e.getMessage());
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "error", "No se actualizo con exito"));
+        }
+    }
+    
+    public void eliminarProducto(Producto modelo){
+        try {
+             productoD.eliminar(modelo);
+        } catch (Exception e) {
+            System.out.println("Error al eliminar productoC : " + e.getMessage() );
         }
     }
 
@@ -165,6 +195,14 @@ public class ImgC implements Serializable {
 
     public void setProductoD(ProductoImpl productoD) {
         this.productoD = productoD;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
 }
