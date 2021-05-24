@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:menubar>
+                <p:menuitem value="Inicio" url="/multimedia-java-primefaces"/> 
+                <p:menuitem value="Imagen" url="imagen.xhtml"/> 
+            </p:menubar>
+        </h:form>
+        <h:form id="message">
+            <p:growl id="msg" severity="info,fatal,error"  showSummary="true" 
+                     showDetail="true" sticky="false" life="6000"/>
+        </h:form>
+        <h1 >Ejemplo 1</h1> 
+        <h:form id="frm1">
+            <p:panelGrid columns="2">
+                <p:selectOneMenu value="${imgC.numero}" >
+                    <p:ajax event="valueChange" listener="${imgC.cambiarVideo()}" update="video"/>
+                    <f:selectItem  itemLabel="Seleccione" itemValue="0" />
+                    <f:selectItems value="${imgC.listaM}" var="m" itemLabel="${m.identificador}" itemValue="${m.identificador}"/>
+                </p:selectOneMenu>
+                <p:video value="${imgC.video}" id="video"
+                         player="mp4"
+                         controls="true"
+                         width="420"
+                         height="250">
+
+                </p:video>
+            </p:panelGrid>
+        </h:form>
+        <h1 >Ejemplo 2</h1> 
+        <h:form id="frm2">
+            <p:panelGrid columns="2" id="pnFrm">
+                <p:outputLabel value="Nombre: " for="txtnombre"/>
+                <p:inputText value="${imgC.persona.nombre}" id="txtnombre"/>
+                <p:outputLabel value="Apellido: " for="txtapellido"/>
+                <p:inputText value="${imgC.persona.apellido}" id="txtapellido"/>
+                <p:outputLabel value="dni: " for="txtdni"/>
+                <p:inputText value="${imgC.persona.dni}" id="txtdni" maxlength="8"/>
+                <p:outputLabel value="video: " for="txtvideo"/>
+                <p:selectOneMenu value="${imgC.persona.video}" id="txtvideo">
+                    <p:ajax event="valueChange" listener="${imgC.cambiarVideo()}" update="video"/>
+                    <f:selectItem  itemLabel="Seleccione" itemValue="0" />
+                    <f:selectItems value="${imgC.listaM}" var="m" itemLabel="${m.identificador}" itemValue="${m.identificador}"/>
+                </p:selectOneMenu>
+                <p:video value="${imgC.video}" id="video"
+                         player="mp4"
+                         controls="true"
+                         width="420"
+                         height="250">
+                </p:video>
+            </p:panelGrid>
+            <p:commandButton value="Registrar" actionListener="${imgC.registrarPersona()}" update="frm2:pnFrm :message:msg :frm3"/>
+        </h:form>
+        <h1 >Ejemplo 2</h1> 
+        <h:form id="frm3">
+            <p:dataTable value="${imgC.listaP}" var="p">
+                <p:column headerText="Nombre">
+                    <h:outputText value="${p.nombre}"/>                    
+                </p:column>
+                <p:column headerText="Apellido">
+                    <h:outputText value="${p.apellido}"/>                    
+                </p:column>
+                <p:column headerText="dni">
+                    <h:outputText value="${p.dni}"/>                    
+                </p:column>
+                <p:column headerText="video">
+                    <p:video value="video/video${p.video}.mp4" 
+                             player="mp4"
+                             controls="true"
+                             width="420"
+                             height="250">
+                    </p:video>                   
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

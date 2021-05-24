@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:menubar>
+                <p:menuitem value="Inicio" url="/multimedia-java-primefaces"/> 
+                <p:menuitem value="Video" url="video.xhtml"/> 
+            </p:menubar>
+        </h:form>
+        <p:card style="width: 500px">
+            <f:facet name="header">
+                <img alt="user header" src="image/1.jpg"/>
+            </f:facet>
+            <f:facet name="title">
+                Titulo
+            </f:facet>
+            <f:facet name="subtitle">
+                Sub titulo
+            </f:facet>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
+                quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+        </p:card>
+        <div class="p-grid">
+            <p:repeat value="${imgC.listaPd}" var="pd" >
+                <div class="p-col-4">
+                    <p:card style="width: 500px">
+                        <f:facet name="header">
+                            <img alt="user header" src="image/${pd.imagen}.jpg"/>
+                        </f:facet>
+                        <f:facet name="title">
+                            ${pd.nombre}
+                        </f:facet>
+                        <f:facet name="subtitle">
+                            ${pd.categoria.nombre}
+                        </f:facet>
+                        <p>${pd.descripcion}</p>
+                    </p:card>
+                </div>
+            </p:repeat>
+        </div>
+    </h:body>
+</html>
+
